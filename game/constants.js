@@ -1,0 +1,21 @@
+// global constants
+var OUTLINE_WIDTH = 2;
+
+var SHADOW_COLOR = 'rgba(0,0,0,0.2)';
+var SHADOW_ANGLE = 0.65 * Math.PI;
+
+var CASTLE_CRITICAL_DISTANCE = 5;
+
+var MONSTER_SPEED = 40;
+var MONSTER_COOLOFF = 1;
+
+var TOWER_ANGULAR_SPEED = 1;
+var TOWER_POWER = 0.5;
+
+var PROJECTILE_SPEED = 500;
+
+var WIN_SHOW_TIME_MAX = 8;
+var WIN_SHOW_TIME_MIN = 1;
+
+var BANNER_COLOR = 'rgb(243, 188, 9)';
+var BANNER_OUTLINE = '#FFF0AA';
