@@ -1,8 +1,24 @@
 var LEVELS = [
+	// {
+	// 	towers: [
+	// 		{
+	// 			pos: Point.make(400, 300),
+	// 			dir: Vector.make(-1, 0),
+	// 			cooloff: 1,
+	// 			range: 100,
+	// 		}
+	// 	],
+	// 	launchPads: [
+	// 	],
+	// 	castle: Point.make(650, 300)
+	// },
 	{
 		towers: [],
 		launchPads: [
-			Rect.coords(200, 250, 100, 100),
+			{
+				rect: Rect.coords(200, 250, 100, 100),
+				cooloff: 1
+			}
 		],
 		castle: Point.make(500, 300)
 	},
@@ -11,12 +27,40 @@ var LEVELS = [
 			{
 				pos: Point.make(400, 300),
 				dir: Vector.make(-1, 0),
-				cooloff: 0.6,
+				cooloff: 1,
 				range: 100,
 			}
 		],
 		launchPads: [
-			Rect.coords(100, 250, 100, 100)
+			{
+				rect: Rect.coords(150, 250, 25, 25),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(200, 350, 25, 25),
+				cooloff: 3
+			}
+		],
+		castle: Point.make(650, 300)
+	},
+	{
+		towers: [
+			{
+				pos: Point.make(400, 300),
+				dir: Vector.make(-1, 0),
+				cooloff: 0.9,
+				range: 100,
+			}
+		],
+		launchPads: [
+			{
+				rect: Rect.coords(100, 225, 100, 50),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(100, 325, 100, 50),
+				cooloff: 3
+			}
 		],
 		castle: Point.make(650, 300)
 	},
@@ -26,176 +70,119 @@ var LEVELS = [
 				pos: Point.make(400, 300),
 				dir: Vector.make(-1, 0),
 				cooloff: 0.5,
-				range: 200,
-			}
-		],
-		launchPads: [
-			Rect.coords(0, 0, 100, 100),
-			Rect.coords(0, 500, 100, 100)
-		],
-		castle: Point.make(400, 300)
-	},
-	{
-		towers: [
-			{
-				pos: Point.make(150, 300),
-				dir: Vector.make(1, 0),
-				cooloff: 1,
-				range: 300,
+				range: 50,
 			},
 			{
-				pos: Point.make(650, 300),
-				dir: Vector.make(-1, 0),
-				cooloff: 1,
-				range: 300,
-			}
-		],
-		launchPads: [
-			Rect.coords(350, 0, 100, 100),
-			Rect.coords(350, 500, 100, 100),
-			Rect.coords(700, 500, 100, 100)
-		],
-		castle: Point.make(400, 300)
-	},
-	{
-		towers: [
-			{
-				pos: Point.make(300, 400),
-				dir: Vector.make(-1, 0),
-				cooloff: 1,
-				range: 225,
-			},
-			{
-				pos: Point.make(500, 200),
-				dir: Vector.make(1, 0),
-				cooloff: 1,
-				range: 225,
-			}
-		],
-		launchPads: [
-			Rect.coords(700, 500, 100, 100),
-			Rect.coords(350, 500, 100, 100)
-		],
-		castle: Point.make(400, 300)
-	},
-	{
-		towers: [
-			{
-				pos: Point.make(300, 250),
+				pos: Point.make(520, 300),
 				dir: Vector.make(-1, 0),
 				cooloff: 0.5,
-				range: 150,
-			},
-			{
-				pos: Point.make(500, 350),
-				dir: Vector.make(-1, 0),
-				cooloff: 0.5,
-				range: 150,
+				range: 50,
 			}
 		],
 		launchPads: [
-			Rect.coords(0, 0, 100, 100),
-			Rect.coords(0, 250, 100, 100),
-			Rect.coords(0, 500, 100, 100)
+			{
+				rect: Rect.coords(50, 275, 50, 50),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(150, 275, 50, 50),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(250, 275, 50, 50),
+				cooloff: 3
+			}
 		],
-		castle: Point.make(700, 300)
+		castle: Point.make(650, 300)
 	},
 	{
 		towers: [
 			{
-				pos: Point.make(250, 50),
+				pos: Point.make(400, 200),
 				dir: Vector.make(-1, 0),
-				cooloff: 1,
-				range: 290,
+				cooloff: 1.0,
+				range: 80,
 			},
 			{
-				pos: Point.make(500, 550),
+				pos: Point.make(400, 400),
 				dir: Vector.make(-1, 0),
-				cooloff: 1,
-				range: 290,
-			}
-		],
-		launchPads: [
-			Rect.coords(0, 0, 100, 100),
-			Rect.coords(0, 250, 100, 100),
-			Rect.coords(0, 500, 100, 100)
-		],
-		castle: Point.make(700, 300)
-	},
-	{
-		towers: [
-			{
-				pos: Point.make(200, 100),
-				dir: Vector.make(-1, 0),
-				cooloff: 1,
-				range: 100,
+				cooloff: 1.0,
+				range: 80,
 			},
 			{
 				pos: Point.make(600, 300),
 				dir: Vector.make(-1, 0),
-				cooloff: 1,
-				range: 100,
-			},
-			{
-				pos: Point.make(200, 500),
-				dir: Vector.make(-1, 0),
-				cooloff: 1,
+				cooloff: 1.0,
 				range: 100,
 			}
 		],
 		launchPads: [
-			Rect.coords(0, 0, 100, 100),
-			Rect.coords(0, 500, 100, 100)
-		],
-		castle: Point.make(700, 300)
-	},
-	{
-		towers: [
 			{
-				pos: Point.make(400, 120),
-				dir: Vector.make(-1, 0),
-				cooloff: 0.5,
-				range: 250,
+				rect: Rect.coords(50, 100, 25, 25),
+				cooloff: 3
 			},
 			{
-				pos: Point.make(600, 380),
-				dir: Vector.make(-1, 0),
-				cooloff: 0.5,
-				range: 250,
+				rect: Rect.coords(200, 50, 25, 25),
+				cooloff: 3
 			},
 			{
-				pos: Point.make(200, 450),
-				dir: Vector.make(-1, 0),
-				cooloff: 0.7,
-				range: 100,
+				rect: Rect.coords(100, 475, 25, 25),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(250, 525, 25, 25),
+				cooloff: 3
 			}
 		],
-		launchPads: [
-			Rect.coords(0, 0, 100, 100),
-			Rect.coords(0, 500, 100, 100),
-			Rect.coords(700, 500, 100, 100)
-		],
-		castle: Point.make(700, 100)
+		castle: Point.make(600, 300)
 	},
 	{
 		towers: [
 			{
-				pos: Point.make(200, 500),
-				dir: Vector.make(-1, 0),
-				cooloff: 0.5,
-				range: 100,
-			},
-			{
-				pos: Point.make(700, 300),
+				pos: Point.make(200, 300),
 				dir: Vector.make(-1, 0),
 				cooloff: 1.0,
-				range: 150,
+				range: 80,
+			},
+			{
+				pos: Point.make(600, 300),
+				dir: Vector.make(-1, 0),
+				cooloff: 1.0,
+				range: 80,
+			},
+			{
+				pos: Point.make(400, 300),
+				dir: Vector.make(-1, 0),
+				cooloff: 0.15,
+				range: 100,
 			}
 		],
 		launchPads: [
-			Rect.coords(0, 460, 25, 25),
-			Rect.coords(0, 575, 25, 25)
+			{
+				rect: Rect.coords(10, 250, 25, 25),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(35, 300, 25, 25),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(725, 250, 25, 25),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(700, 300, 25, 25),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(385, 100, 35, 35),
+				cooloff: 3
+			},
+			{
+				rect: Rect.coords(385, 500, 35, 35),
+				cooloff: 3
+			}
 		],
-		castle: Point.make(700, 300)
+		castle: Point.make(400, 300)
 	}
 ];

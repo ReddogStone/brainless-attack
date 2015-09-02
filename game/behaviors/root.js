@@ -249,8 +249,8 @@ var RootBehavior = (function() {
 		return world.with('entities', entities).with('win', win ? time : undefined);
 	}
 
-	function pointInsideLaunchPads(point, launchPads) {
-		return launchPads.some(function(launchPad) { return Rect.pointInside(launchPad, point); });
+	function getLaunchPadIndexBelowPoint(point, launchPads) {
+		return launchPads.findIndex(function(launchPad) { return Rect.pointInside(launchPad.rect, point); });
 	}
 
 	function makeMonster(pos) {
@@ -266,16 +266,37 @@ var RootBehavior = (function() {
 		var nextMonsterId = world.nextMonsterId;
 		var lastMonsterTime = world.lastMonsterTime;
 
-		if (((time - lastMonsterTime) > MONSTER_COOLOFF) && pointInsideLaunchPads(mousePos, world.entities.launchPads)) {
+		var launchPads = world.entities.launchPads;
+
+		if (launchPads.length === 0) {
 			monsters = world.entities.monsters.with(nextMonsterId, makeMonster(mousePos));
 			nextMonsterId++;
 			lastMonsterTime = time;
 
 			Sound.play('monster');
+		} else {
+			var launchPadIndex = getLaunchPadIndexBelowPoint(mousePos, launchPads);
+			if (launchPadIndex >= 0) {
+				var launchPad = launchPads[launchPadIndex];
+				if ((time - launchPad.lastMonsterTime) > launchPad.cooloff) {
+					monsters = world.entities.monsters.with(nextMonsterId, makeMonster(mousePos));
+					nextMonsterId++;
+					lastMonsterTime = time;
+
+					launchPads = launchPads.slice(0, launchPadIndex)
+						.concat([launchPad.with('lastMonsterTime', time)])
+						.concat(launchPads.slice(launchPadIndex + 1));
+
+					Sound.play('monster');
+				}
+			}
 		}
 
 		return world.merge({
-			entities: world.entities.with('monsters', monsters),
+			entities: world.entities.merge({
+				monsters: monsters,
+				launchPads: launchPads
+			}),
 			nextMonsterId: nextMonsterId,
 			lastMonsterTime: lastMonsterTime
 		});
@@ -283,7 +304,7 @@ var RootBehavior = (function() {
 
 	function mouseMove(world, mousePos, time) {
 		var blueprint = world.entities.monsterBlueprint;
-		if (pointInsideLaunchPads(mousePos, world.entities.launchPads)) {
+		if (getLaunchPadIndexBelowPoint(mousePos, world.entities.launchPads) >= 0) {
 			blueprint = blueprint.with('pos', mousePos);
 		}
 
@@ -434,7 +455,11 @@ var RootBehavior = (function() {
 						targets: []
 					});
 				}),
-				launchPads: desc.launchPads,
+				launchPads: desc.launchPads.map(function(launchPad) {
+					return launchPad.merge({
+						lastMonsterTime: -100
+					});
+				}),
 				castle: desc.castle,
 				monsters: {},
 				projectiles: [],

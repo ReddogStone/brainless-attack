@@ -78,19 +78,19 @@ ScriptLoader.module(function() {
 		},
 		'blueprint': function(context, monster, time) {
 			var pos = monster.pos;
-			var cooloff = monster.cooloff;
+			// var cooloff = monster.cooloff;
 
-			if (cooloff < 1) {
-				context.lineWidth = OUTLINE_WIDTH;
-				context.fillStyle = Colors.HEALTH_GOOD;
-				context.strokeStyle = Colors.OUTLINE;
-				context.beginPath();
-				context.arc(pos.x, pos.y, 2 * RADIUS, 0, cooloff * 2 * Math.PI);
-				context.lineTo(pos.x, pos.y);
-				context.closePath();
-				context.fill();
-				context.stroke();
-			}
+			// if (cooloff < 1) {
+			// 	context.lineWidth = OUTLINE_WIDTH;
+			// 	context.fillStyle = Colors.HEALTH_GOOD;
+			// 	context.strokeStyle = Colors.OUTLINE;
+			// 	context.beginPath();
+			// 	context.arc(pos.x, pos.y, 2 * RADIUS, 0, cooloff * 2 * Math.PI);
+			// 	context.lineTo(pos.x, pos.y);
+			// 	context.closePath();
+			// 	context.fill();
+			// 	context.stroke();
+			// }
 
 			drawMonster(context, { pos: pos, dir: { x: 1, y: 0 }, seed: 0 }, Colors.BODY_BLUEPRINT, 0);
 		}
