@@ -34,11 +34,11 @@ var LEVELS = [
 		launchPads: [
 			{
 				rect: Rect.coords(150, 250, 25, 25),
-				cooloff: 3
+				cooloff: 4
 			},
 			{
 				rect: Rect.coords(200, 350, 25, 25),
-				cooloff: 3
+				cooloff: 4
 			}
 		],
 		castle: Point.make(650, 300)
@@ -55,11 +55,11 @@ var LEVELS = [
 		launchPads: [
 			{
 				rect: Rect.coords(100, 225, 100, 50),
-				cooloff: 3
+				cooloff: 4
 			},
 			{
 				rect: Rect.coords(100, 325, 100, 50),
-				cooloff: 3
+				cooloff: 4
 			}
 		],
 		castle: Point.make(650, 300)
@@ -68,7 +68,7 @@ var LEVELS = [
 		towers: [
 			{
 				pos: Point.make(400, 300),
-				dir: Vector.make(-1, 0),
+				dir: Vector.make(1, 0),
 				cooloff: 0.5,
 				range: 50,
 			},
