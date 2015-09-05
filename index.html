@@ -111,6 +111,7 @@ function onload() {
 				{ url: 'game/assets/music/background1.ogg' }
 			],
 			volume: 0.5,
+			noDuplicates: true,
 			onEnded: 'background'
 		}
 	});
@@ -184,6 +185,13 @@ function onload() {
 	animate();
 
 	Sound.play('background');
+
+	window.addEventListener('blur', function() {
+		Sound.stopAll();
+	});
+	window.addEventListener('focus', function() {
+		Sound.play('background');
+	});
 }
 
 </script>

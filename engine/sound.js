@@ -10,7 +10,9 @@ var Sound = (function(exports) {
 				var source = soundDesc.sources[sourceIndex];
 				var variant = [];
 				pool[id].push(variant);
-				for (var i = 0; i < DUPLICATES; i++) {
+
+				var count = soundDesc.noDuplicates ? 1 : DUPLICATES;
+				for (var i = 0; i < count; i++) {
 					var sound = new Audio(source.url);
 					sound.volume = source.volume || soundDesc.volume;
 					sound.load();
@@ -39,6 +41,16 @@ var Sound = (function(exports) {
 		variant.unshift(sound);
 
 		sound.play();
+	};
+
+	exports.stopAll = function() {
+		for (var id in pool) {
+			pool[id].forEach(function(variants) {
+				variants.forEach(function(sound) {
+					sound.pause();
+				});
+			});
+		}
 	};
 
 	return exports;
