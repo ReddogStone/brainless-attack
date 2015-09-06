@@ -7,20 +7,6 @@ var MainGameBehavior = (function() {
 		].reduce(Vector.add);
 	}
 
-	function getGrade(duration) {
-		if (duration > 5 * 60) {
-			return 0;
-		} else if (duration > 2 * 60) {
-			return 1;
-		} else if (duration > 1 * 60) {
-			return 2;
-		} else if (duration > 30) {
-			return 3;
-		} else {
-			return 4;
-		}
-	}
-
 	function getRenderList(world, time) {
 		var result = [
 			{ renderScript: { name: 'background', textures: ['grass'] } }
@@ -42,32 +28,6 @@ var MainGameBehavior = (function() {
 		]).concat(world.entities.projectiles.map(function(projectile) {
 			return projectile.with('renderScript', 'projectile');
 		}));
-
-		if (world.win !== undefined) {
-			if (world.levelIndex < LEVELS.length - 1) {
-				var duration = world.win - world.startTime;
-
-				result.push({
-					renderScript: 'win',
-					grade: getGrade(duration),
-					duration: duration,
-					winTime: world.win,
-					seed: Math.random()
-				});
-			} else {
-				result.push({
-					renderScript: 'final',
-					winTime: world.win
-				});
-			}
-		}
-
-		if (world.initial !== undefined) {
-			result.push({
-				renderScript: 'initial',
-				start: world.initial
-			});
-		}
 
 		return result;
 	}
@@ -321,35 +281,6 @@ var MainGameBehavior = (function() {
 		};
 	}
 
-	function handleWinState(winTime, world, eventType, data, time) {
-		switch (eventType) {
-			case 'mousedown':
-				if (time - world.win > WIN_SHOW_TIME_MIN) {
-					return createWorld(world.assets, LEVELS, nextLevel(world.levelIndex), time);
-				}
-				break;
-			case 'update':
-				if ((time - world.win > WIN_SHOW_TIME_MAX) && (world.levelIndex < LEVELS.length - 1)) {
-					return createWorld(world.assets, LEVELS, nextLevel(world.levelIndex), time);
-				}
-				break;
-			case 'draw':
-				draw(world, data, time);
-				break;
-		}
-
-		return world;
-	}
-
-	function handleInitialState(world, eventType, data, time) {
-		switch (eventType) {
-			case 'mousedown': return world.without('initial');
-			case 'draw': draw(world, data, time); break;
-		}
-
-		return world;
-	}
-
 	function handleGameState(world, eventType, data, time) {
 		switch (eventType) {
 			case 'mousedown': return mouseDown(world, data, time);
@@ -374,26 +305,10 @@ var MainGameBehavior = (function() {
 		return world;
 	}
 
-	return StatefulBehavior(function init(assets, levelIndex) {
-/*		document.getElementById('btnReload').addEventListener('click', function() {
-			loadScriptCache();
-		}, false); */
-
-		return createWorld(assets, LEVELS, levelIndex, 0)/*.with('initial', 0)*/;
+	return StatefulBehavior(function init(assets, levelIndex, startTime) {
+		return createWorld(assets, LEVELS, levelIndex, startTime)/*.with('initial', 0)*/;
 	}, function handleEvent(world, eventType, data, time) {
-		var newWorld = world;
-
-		if (world.win !== undefined) {
-			newWorld = handleWinState(world.win, world, eventType, data, time);
-		} else if (world.initial !== undefined) {
-			newWorld = handleInitialState(world, eventType, data, time);
-		} else {
-			newWorld = handleGameState(world, eventType, data, time);
-		}
-
-		if (newWorld.win === time) {
-			Sound.play('win');
-		}
+		var newWorld = handleGameState(world, eventType, data, time);
 
 		return {
 			state: newWorld,

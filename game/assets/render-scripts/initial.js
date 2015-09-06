@@ -7,7 +7,7 @@ ScriptLoader.module(function() {
 	};
 
 	return {
-		'default': function(context, data, time) {
+		'default': function(context, data) {
 			var canvas = context.canvas;
 			var width = canvas.width;
 			var height = canvas.height;
