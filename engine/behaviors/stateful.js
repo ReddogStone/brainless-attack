@@ -1,16 +1,20 @@
 var StatefulBehavior = (function() {
 	return function(init, handleEvent) {
-		function main(world) {
+		function main(state) {
 			return function() {
-				var newWorld = handleEvent.apply(null, [world].concat(Array.prototype.slice.call(arguments)));
-				return main(newWorld);
+				var answer = handleEvent.apply(null, [state].concat(Array.prototype.slice.call(arguments)));
+
+				return {
+					next: main(answer.state),
+					result: answer.result
+				};
 			}
 		}
 
 		return {
 			init: function() {
-				var world = init.apply(null, arguments);
-				return main(world);
+				var state = init.apply(null, arguments);
+				return main(state);
 			}
 		};
 	};
