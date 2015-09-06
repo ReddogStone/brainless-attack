@@ -474,15 +474,82 @@ var RootBehavior = (function() {
 		};
 	}
 
-	return {
-		init: function() {
-			loadScriptCache();
-
-/*			document.getElementById('btnReload').addEventListener('click', function() {
-				loadScriptCache();
-			}, false); */
-
-			return main(createWorld(LEVELS, 0, 0).with('initial', 0));
+	function handleWinState(winTime, world, eventType, data, time) {
+		switch (eventType) {
+			case 'mousedown':
+				if (time - world.win > WIN_SHOW_TIME_MIN) {
+					return createWorld(LEVELS, nextLevel(world.levelIndex), time);
+				}
+				break;
+			case 'update':
+				if ((time - world.win > WIN_SHOW_TIME_MAX) && (world.levelIndex < LEVELS.length - 1)) {
+					return createWorld(LEVELS, nextLevel(world.levelIndex), time);
+				}
+				break;
+			case 'draw':
+				draw(world, data, time);
+				break;
 		}
+
+		return world;
 	}
+
+	function handleInitialState(world, eventType, data, time) {
+		switch (eventType) {
+			case 'mousedown': return world.without('initial');
+			case 'draw': draw(world, data, time); break;
+		}
+
+		return world;
+	}
+
+	function handleGameState(world, eventType, data, time) {
+		switch (eventType) {
+			case 'mousedown': return mouseDown(world, data, time);
+			case 'mousemove': return mouseMove(world, data, time);
+			case 'mouseup': return mouseUp(world, data, time);
+			case 'update': return update(world, data, time);
+
+			case 'draw': draw(world, data, time); break;
+
+			case 'keypress':
+				// console.log(data);
+				if (data.keyCode === 39) {
+					return createWorld(LEVELS, nextLevel(world.levelIndex), time);
+				} else if (data.keyCode === 37) {
+					return createWorld(LEVELS, (world.levelIndex - 1 + LEVELS.length) % LEVELS.length, time);
+				} else if (data.charCode === 119) {
+					return world.with('win', time);
+				}
+				break;
+		}
+
+		return world;
+	}
+
+	return StatefulBehavior(function init() {
+		loadScriptCache();
+
+/*		document.getElementById('btnReload').addEventListener('click', function() {
+			loadScriptCache();
+		}, false); */
+
+		return createWorld(LEVELS, LEVELS.length - 1, 0)/*.with('initial', 0)*/;
+	}, function handleEvent(world, eventType, data, time) {
+		var result = world;
+
+		if (world.win !== undefined) {
+			result = handleWinState(world.win, world, eventType, data, time);
+		} else if (world.initial !== undefined) {
+			result = handleInitialState(world, eventType, data, time);
+		} else {
+			result = handleGameState(world, eventType, data, time);
+		}
+
+		if (result.win === time) {
+			Sound.play('win');
+		}
+
+		return result;
+	});
 })();
