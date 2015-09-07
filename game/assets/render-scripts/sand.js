@@ -5,7 +5,7 @@ ScriptLoader.module(function() {
 		OUTLINE: 'rgba(239, 221, 111, 0.4)',
 	};
 
-	var SMOOTH_STRENGTH = 30;
+	var SMOOTH_STRENGTH = 20;
 
 	return {
 		'default': function(context, sandArea, time) {
