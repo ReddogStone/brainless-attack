@@ -19,3 +19,5 @@ var WIN_SHOW_TIME_MIN = 1;
 
 var BANNER_COLOR = 'rgb(243, 188, 9)';
 var BANNER_OUTLINE = '#FFF0AA';
+
+var SAND_SLOWDOWN = 0.5;

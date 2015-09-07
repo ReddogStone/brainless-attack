@@ -17,7 +17,8 @@ var RootBehavior = (function() {
 		'win',
 		'radar',
 		'initial',
-		'final'
+		'final',
+		'sand'
 	].map(getScriptPath);
 
 	var textureGeneratorNames = [
@@ -155,9 +156,9 @@ var RootBehavior = (function() {
 
 	return {
 		init: function() {
-/*			document.getElementById('btnReload').addEventListener('click', function() {
+			document.getElementById('btnReload').addEventListener('click', function() {
 				loadScriptCache();
-			}, false); */
+			}, false);
 
 			loadScriptCache();
 			return makeLevel(LEVELS.length - 1, 0, { initial: 0 });

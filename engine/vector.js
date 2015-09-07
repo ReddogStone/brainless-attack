@@ -4,6 +4,10 @@ var Vector = (function() {
 	function add(v1, v2) {
 		return make(v1.x + v2.x, v1.y + v2.y);
 	}
+	function sub(v1, v2) {
+		return make(v1.x - v2.x, v1.y - v2.y);
+	}
+
 	function neg(v) {
 		return make(-v.x, -v.y);
 	}
@@ -19,22 +23,25 @@ var Vector = (function() {
 		return Math.sqrt(sqLength(v));
 	}
 
+	function normalize(v) {
+		return mul(v, 1.0 / length(v));		
+	}
+
 	return {
 		make: make,
 		clone: Point.clone,
 		add: add,
 		neg: neg,
 		mul: mul,
-		sub: function(v1, v2) {
-			return make(v1.x - v2.x, v1.y - v2.y);
-		},
+		sub: sub,
 		lerp: function(v1, v2, a) {
 			return add(mul(v1, 1 - a), mul(v2, a));
 		},
 		sqLength: sqLength,
 		length: length,
-		normalize: function(v) {
-			return mul(v, 1.0 / length(v));
+		normalize: normalize,
+		direction: function(p1, p2) {
+			return normalize(sub(p2, p1));
 		}
 	}
 })();

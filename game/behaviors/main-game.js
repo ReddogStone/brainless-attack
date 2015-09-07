@@ -12,7 +12,9 @@ var MainGameBehavior = (function() {
 			{ renderScript: { name: 'background', textures: ['grass'] } }
 		].concat([
 			world.entities.castle.with('renderScript', { name: 'castle', textures: ['castle'] })
-		]).concat(world.entities.launchPads.map(function(launchPad) {
+		]).concat(world.entities.sandAreas.map(function(launchPad) {
+			return launchPad.with('renderScript', 'sand');
+		})).concat(world.entities.launchPads.map(function(launchPad) {
 			return launchPad.with('renderScript', 'launch-pad');
 		})).concat(world.entities.towers.map(function(tower) {
 			return tower.with('renderScript', 'tower');
@@ -39,7 +41,7 @@ var MainGameBehavior = (function() {
 	function update(world, deltaTime, time) {
 		var castlePos = world.entities.castle;
 
-		var monsters = MonsterLogic.update(world.entities.monsters, castlePos, deltaTime);
+		var monsters = MonsterLogic.update(world.entities.monsters, world.entities.sandAreas, castlePos, deltaTime);
 		var towers = TowerLogic.update(world.entities.towers, monsters, deltaTime, time);
 		var projectiles = ProjectileLogic.update(world.entities.projectiles, monsters, deltaTime)
 
@@ -140,6 +142,9 @@ var MainGameBehavior = (function() {
 					return launchPad.merge({
 						lastMonsterTime: -100
 					});
+				}),
+				sandAreas: (desc.sand || []).map(function(sand) {
+					return sand.clone();
 				}),
 				castle: desc.castle,
 				monsters: {},

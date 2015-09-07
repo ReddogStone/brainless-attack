@@ -1,9 +1,20 @@
 var MonsterLogic = (function() {
+
+
 	return {
-		update: function(monsters, castlePos, deltaTime) {
+		update: function(monsters, sandAreas, castlePos, deltaTime) {
 			return monsters.map(function(monster) {
+				var speed = MONSTER_SPEED;
+
+				var inSandArea = sandAreas.some(function(sandArea) {
+					return Polygon.pointInside(sandArea.path, monster.pos);
+				});
+				if (inSandArea) {
+					speed *= SAND_SLOWDOWN;
+				}
+
 				var dir = Vector.normalize(Vector.sub(castlePos, monster.pos));
-				var pos = Vector.add(monster.pos, Vector.mul(dir, MONSTER_SPEED * deltaTime));
+				var pos = Vector.add(monster.pos, Vector.mul(dir, speed * deltaTime));
 				return monster.merge({
 					pos: pos,
 					dir: dir
