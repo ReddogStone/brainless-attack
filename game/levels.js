@@ -409,6 +409,77 @@ var LEVELS = [
 		],
 		castle: Point.make(600, 300)
 	},
+	{
+		towers: [
+			{
+				pos: Point.make(400, 300),
+				dir: Vector.make(-1, 0),
+				cooloff: 0.7,
+				range: 75,
+			}
+		],
+		launchPads: [
+			{
+				rect: Rect.coords(150, 200, 25, 25),
+				cooloff: 4
+			},
+			{
+				rect: Rect.coords(150, 375, 25, 25),
+				cooloff: 4
+			}
+		],
+		sand: [
+			{
+				path: [
+					{ x: 230, y: 100 },
+					{ x: 350, y: 100 },
+					{ x: 230, y: 400 }
+				]
+			}
+		],
+		castle: Point.make(600, 300)
+	},
+	{
+		towers: [
+			{
+				pos: Point.make(300, 300),
+				dir: Vector.make(-1, 0),
+				cooloff: 0.7,
+				range: 75,
+			},
+			{
+				pos: Point.make(650, 300),
+				dir: Vector.make(-1, 0),
+				cooloff: 0.8,
+				range: 100,
+			}
+		],
+		launchPads: [
+			{
+				rect: Rect.coords(150, 250, 25, 25),
+				cooloff: 4
+			},
+			{
+				rect: Rect.coords(150, 325, 25, 25),
+				cooloff: 4
+			},
+			{
+				rect: Rect.coords(625, 100, 25, 25),
+				cooloff: 4
+			}
+		],
+		sand: [
+			{
+				path: [
+					{ x: 400, y: 150 },
+					{ x: 500, y: 150 },
+					{ x: 500, y: 450 },
+					{ x: 400, y: 450 }
+				]
+			}
+		],
+		castle: Point.make(650, 300)
+	},
 
 /*	{
 		towers: [

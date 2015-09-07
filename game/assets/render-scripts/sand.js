@@ -2,7 +2,7 @@ ScriptLoader.module(function() {
 
 	var Colors = {
 		BODY: '#EFDD6F',
-		OUTLINE: 'rgba(239, 221, 111, 0.4)',
+		OUTLINE: 'rgba(239, 221, 111, 0.6)',
 	};
 
 	var SMOOTH_STRENGTH = 20;
@@ -13,7 +13,7 @@ ScriptLoader.module(function() {
 
 			context.fillStyle = Colors.BODY;
 			context.strokeStyle = Colors.OUTLINE;
-			context.lineWidth = OUTLINE_WIDTH;
+			context.lineWidth = OUTLINE_WIDTH * 10;
 
 			context.beginPath();
 
